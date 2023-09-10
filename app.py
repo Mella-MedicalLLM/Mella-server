@@ -39,7 +39,7 @@ def checkError(data: dict):
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host='0.0.0.0', port=1525)
 
 
 ### -- Error Handling -- ###

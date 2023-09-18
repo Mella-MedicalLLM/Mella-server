@@ -25,5 +25,4 @@ class Llama:
             eos_token_id=self.tokenizer.eos_token_id,
             max_length=200,
         )
-        for seq in sequences:
-            print(f"Result: {seq['generated_text']}")
+        return sequences[0]['generated_text']

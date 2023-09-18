@@ -1,8 +1,20 @@
 import json
-
 from flask import Flask, request, jsonify
 from enum import Enum
-from MellaMockup import *
+from Llama import *
+
+
+### -- Error Handling -- ###
+class ServerError(Enum):
+    InvalidInputTextError = ("Invaild Input Text Error", "Input text is invalid")
+    ModelError = ("Model Error", "Model is not loaded")
+
+    def __init__(self, title, description):
+        self.title = title
+        self.description = description
+
+    def message(self):
+        return f"Error:{self.title}\n({self.description})"
 
 ### -------------------- ###
 ###     MeLla Server     ###
@@ -10,7 +22,7 @@ from MellaMockup import *
 
 app = Flask(__name__)
 
-model = MellaMockup()
+model = Llama()
 
 @app.route('/text_generation', methods=['POST'])
 def text_generation():
@@ -40,16 +52,3 @@ def checkError(data: dict):
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=1525)
-
-
-### -- Error Handling -- ###
-class ServerError(Enum):
-    InvalidInputTextError = ("Invaild Input Text Error", "Input text is invalid")
-    ModelError = ("Model Error", "Model is not loaded")
-
-    def __init__(self, title, description):
-        self.title = title
-        self.description = description
-
-    def message(self):
-        return f"Error:{self.title}\n({self.description})"
